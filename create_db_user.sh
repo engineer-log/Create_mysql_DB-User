@@ -6,13 +6,16 @@ read rootpasswd
 echo "Please enter User Name"
 read username
 
-echo "Please enter Schema name"
+echo "Please enter Schema Name"
 read schemaname
+
+echo "Please enter Host Name"
+read host_name
 
 PASSWDDB="$(openssl rand -base64 16)"
 
 mysql -uroot -p${rootpasswd} -e "CREATE DATABASE ${schemaname};"
-mysql -uroot -p${rootpasswd} -e "CREATE USER '"${username}"'@'localhost' IDENTIFIED BY '"${PASSWDDB}"';"
+mysql -uroot -p${rootpasswd} -e "CREATE USER '"${username}"'@'"${host_name}"' IDENTIFIED BY '"${PASSWDDB}"';"
 mysql -uroot -p${rootpasswd} -e "GRANT ALL PRIVILEGES ON ${schemaname}.* TO '"${username}"'@'localhost';"
 
 echo
